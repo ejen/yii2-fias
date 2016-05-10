@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195826_nordoc extends Migration
 {
-    public $tableName = '{{%nordoc}}';
+    public $tableName = '{{%fias_nordoc}}';
 
     public function up()
     {

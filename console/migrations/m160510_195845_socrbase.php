@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195845_socrbase extends Migration
 {
-    public $tableName = '{{%socrbase}}';
+    public $tableName = '{{%fias_socrbase}}';
 
     public function up()
     {

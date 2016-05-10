@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195912_curentst extends Migration
 {
-    public $tableName = '{{%curentst}}';
+    public $tableName = '{{%fias_curentst}}';
 
     public function up()
     {

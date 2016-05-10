@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195814_landmark extends Migration
 {
-    public $tableName = '{{%landmark}}';
+    public $tableName = '{{%fias_landmark}}';
 
     public function up()
     {

@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_200043_hststat extends Migration
 {
-    public $tableName = '{{%hststat}}';
+    public $tableName = '{{%fias_hststat}}';
 
     public function up()
     {

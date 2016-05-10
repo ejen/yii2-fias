@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_200008_centerst extends Migration
 {
-    public $tableName = '{{%centerst}}';
+    public $tableName = '{{%fias_centerst}}';
 
     public function up()
     {

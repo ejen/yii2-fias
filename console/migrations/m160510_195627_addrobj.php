@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195627_addrobj extends Migration
 {
-    public $tableName = '{{%addrobj}}';
+    public $tableName = '{{%fias_addrobj}}';
 
     public function up()
     {

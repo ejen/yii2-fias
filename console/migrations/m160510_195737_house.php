@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160510_195737_house extends Migration
 {
-    public $tableName = '{{%house}}';
+    public $tableName = '{{%fias_house}}';
 
     public function up()
     {
