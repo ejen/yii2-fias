@@ -10,6 +10,6 @@
 ```
 
 ```
-./yii migrate --migrationPath=@vendor/ejen/yii2-fias/migrations
+./yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
 ```
 
