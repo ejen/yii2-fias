@@ -4,12 +4,38 @@ namespace ejen\fias\console\controllers;
 
 use Yii;
 
+use ejen\fias\common\models\FiasActstat;
 use ejen\fias\common\models\FiasAddrobj;
+use ejen\fias\common\models\FiasCenterst;
+use ejen\fias\common\models\FiasCurentst;
+use ejen\fias\common\models\FiasDaddrobj;
+use ejen\fias\common\models\FiasDhouse;
+use ejen\fias\common\models\FiasDhousint;
+use ejen\fias\common\models\FiasDlandmrk;
+use ejen\fias\common\models\FiasDnordoc;
+use ejen\fias\common\models\FiasEststat;
 use ejen\fias\common\models\FiasHouse;
+use ejen\fias\common\models\FiasHouseint;
+use ejen\fias\common\models\FiasHststat;
+use ejen\fias\common\models\FiasIntvstat;
+use ejen\fias\common\models\FiasLandmark;
+use ejen\fias\common\models\FiasNordoc;
+use ejen\fias\common\models\FiasOperstat;
+use ejen\fias\common\models\FiasStrstat;
+use ejen\fias\common\models\FiasSocrbase;
 
 class FiasController extends \yii\console\Controller
 {
-    public function actionImportDbf($filename)
+    public $region;
+
+    public function options()
+    {
+        return [
+            'region',
+        ];
+    }
+
+    public function actionImportDbf($filename, $region = false)
     {
         $db = @dbase_open($filename, 0);
         if (!$db)
@@ -18,15 +44,40 @@ class FiasController extends \yii\console\Controller
             return 1;
         }
 
-        if (preg_match('/^.*ADDROBJ\.DBF$/', $filename))
+        $classMap = [
+            '/^.*DADDROBJ\.DBF$/'   => FiasDaddrobj::className(),
+            '/^.*ADDROBJ\.DBF$/'    => FiasAddrobj::className(),
+            '/^.*LANDMARK\.DBF$/'   => FiasLandmark::className(),
+            '/^.*DHOUSE\.DBF$/'     => FiasDhouse::className(),
+            '/^.*HOUSE\d\d\.DBF$/'  => FiasHouse::className(),
+            '/^.*DHOUSINT\.DBF$/'   => FiasDhousint::className(),
+            '/^.*HOUSEINT\.DBF$/'   => FiasHouseint::className(),
+            '/^.*DLANDMRK\.DBF$/'   => FiasDlandmrk::className(),
+            '/^.*DNORDOC\.DBF$/'    => FiasDnordoc::className(),
+            '/^.*NORDOC\d\d\.DBF$/' => FiasNordoc::className(),
+            '/^.*ESTSTAT\.DBF$/'    => FiasDhousint::className(),
+            '/^.*ACTSTAT\.DBF$/'    => FiasActstat::className(),
+            '/^.*CENTERST\.DBF$/'   => FiasCenterst::className(),
+            '/^.*ESTSTAT\.DBF$/'    => FiasEststat::className(),
+            '/^.*HSTSTAT\.DBF$/'    => FiasHststat::className(),
+            '/^.*OPERSTAT\.DBF$/'   => FiasOperstat::className(),
+            '/^.*INTVSTAT\.DBF$/'   => FiasIntvstat::className(),
+            '/^.*STRSTAT\.DBF$/'    => FiasStrstat::className(),
+            '/^.*CURENTST\.DBF$/'   => FiasCurentst::className(),
+            '/^.*SOCRBASE\.DBF$/'   => FiasSocrbase::className(),
+        ];
+
+        $modelClass = false;
+        foreach($classMap as $pattern => $className)
         {
-            $modelClass = FiasAddrobj::className();
+            if (preg_match($pattern, $filename))
+            {
+                $modelClass = $className;
+                break;
+            }
         }
-        elseif (preg_match('/^.*HOUSE\d\d\.DBF$/', $filename))
-        {
-            $modelClass = FiasHouse::className();
-        }
-        else
+
+        if ($modelClass === false)
         {
             $this->stderr("Не поддерживаемый DBF файл: '$filename'\n");
             return 1;
@@ -37,17 +88,20 @@ class FiasController extends \yii\console\Controller
         $this->stdout("Записей в DBF файле '$filename' : $rowsCount\n");
 
         $j = 0;
-        for ($i = 1; $i != $rowsCount; $i++)
+        for ($i = 1; $i <= $rowsCount; $i++)
         {
+
+            $row = dbase_get_record_with_names($db, $i);
+
+            if ($modelClass == FiasAddrobj::className() && $this->region && intval($row['REGIONCODE']) != intval($this->region))
+            {
+                continue;
+            }
+
             if ($j == 0)
             {
                 $transaction = Yii::$app->db->beginTransaction();
             }
-
-            $row = dbase_get_record_with_names($db, $i);
-
-            //$regionCode = (int) $row['REGIONCODE'];
-            //if ($regionCode != 60) continue;
 
             $model = new $modelClass;
             foreach($row as $key => $value)
@@ -62,7 +116,7 @@ class FiasController extends \yii\console\Controller
             {
                 $transaction->commit();
                 $j = 0;
-                $this->stdout("Импортировано $i из $rowsCount записей\n");
+                $this->stdout("Обработано $i из $rowsCount записей\n");
             }
         }
 

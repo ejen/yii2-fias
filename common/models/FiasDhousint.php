@@ -2,10 +2,10 @@
 
 namespace ejen\fias\common\models;
 
-class FiasDhouseint extends FiasHouseint
+class FiasDhousint extends FiasHouseint
 {
     public static function tableName()
     {
-        return '{{%fias_dhouseint}}';
+        return '{{%fias_dhousint}}';
     }
 }

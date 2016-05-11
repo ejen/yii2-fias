@@ -2,10 +2,10 @@
 
 namespace ejen\fias\common\models;
 
-class FiasDlandmark extends FiasLandmark
+class FiasDlandmrk extends FiasLandmark
 {
     public static function tableName()
     {
-        return '{{%fias_dlandmark}}';
+        return '{{%fias_dlandmrk}}';
     }
 }
