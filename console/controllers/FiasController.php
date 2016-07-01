@@ -28,7 +28,7 @@ class FiasController extends \yii\console\Controller
 {
     public $region;
 
-    public function options()
+    public function options($actionID)
     {
         return [
             'region',
