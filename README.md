@@ -32,7 +32,9 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 ```php
     ...
     'controllerMap' => [
-        'class' => 'ejen\fias\console\controllers\FiasController',
+        'fias' => [
+            'class' => 'ejen\fias\console\controllers\FiasController',
+        ]
     ],
     ...
 ```
@@ -41,7 +43,7 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 
 ## Импорт dbf файла в базу данных
 ```
-./yii fias/import-dbf /path/to/FILENAME.DBF --region=60
+./yii fias/import-dbf /path/to/FILENAME.DBF --region=66
 ```
 
 Опция region является не обязательной и позволяет импортировать записи относящиеся только к конкретному региону(в случае импорта ADDROBJ.DBF)
