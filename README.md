@@ -32,7 +32,7 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 ```php
     ...
     'controllerMap' => [
-        'fias' => 'ejen\fias\console\controllers\FiasController',
+        'class' => 'ejen\fias\console\controllers\FiasController',
     ],
     ...
 ```
