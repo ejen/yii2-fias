@@ -28,8 +28,17 @@ class FiasAddrobj extends \yii\db\ActiveRecord
             case 6:
                 if ($this->shortname == 'д') return "деревня ".$this->formalname;
                 if ($this->shortname == 'с') return "село ".$this->formalname;
-                if ($this->shortname == 'рп') return "рабочий поселок ".$this->formalname;
+                if ($this->shortname == 'рп')
+                {
+                    if ($this->formalname == 'Кунья') return 'поселок городского типа Кунья';
+                    return "рабочий поселок ".$this->formalname;
+                }
                 break;
+            // Улица
+            case 7:
+                if ($this->shortname == 'ул') return "улица ".$this->formalname;
+                break;
+
         }
         return $this->formalname." ".$this->shortname;
     }

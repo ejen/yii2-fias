@@ -51,8 +51,10 @@ class FiasHelper
         else
         {
             $current = FiasAddrobj::find()->andWhere(['aoguid' => $id, 'currstatus' => 0])->one();
-            $parent  = FiasAddrobj::find()->andWhere(['aoguid' => $current->parentguid, 'currstatus' => 0])->one();
-            $result = $current->name;
+            //$parent  = FiasAddrobj::find()->andWhere(['aoguid' => $current->parentguid, 'currstatus' => 0])->one();
+            //$result = $current->name;
+            $parent = null;
+            $result = $current->fullname;
         }
 
 

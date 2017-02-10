@@ -4,6 +4,7 @@ namespace ejen\fias\console\controllers;
 
 use Yii;
 
+use ejen\fias\common\helpers\FiasHelper;
 use ejen\fias\common\models\FiasActstat;
 use ejen\fias\common\models\FiasAddrobj;
 use ejen\fias\common\models\FiasCenterst;
@@ -19,6 +20,7 @@ use ejen\fias\common\models\FiasHouseint;
 use ejen\fias\common\models\FiasHststat;
 use ejen\fias\common\models\FiasIntvstat;
 use ejen\fias\common\models\FiasLandmark;
+use ejen\fias\common\models\FiasNestedsets;
 use ejen\fias\common\models\FiasNordoc;
 use ejen\fias\common\models\FiasOperstat;
 use ejen\fias\common\models\FiasStrstat;
@@ -28,7 +30,7 @@ class FiasController extends \yii\console\Controller
 {
     public $region;
 
-    public function options()
+    public function options($actionId)
     {
         return [
             'region',
@@ -125,5 +127,77 @@ class FiasController extends \yii\console\Controller
             $transaction->commit();
         }
         return 0;
+    }
+
+    public function actionGenerateFullNames()
+    {
+        foreach(FiasAddrobj::find()->andWhere(['fullname' => null, 'currstatus' => 0])->all() as $model)
+        {
+            $model->fullname = FiasHelper::toString($model->aoguid);
+            $model->save(false, ['fullname']);
+        }
+
+        foreach(FiasHouse::find()->andWhere(['fullname' => null])->all() as $model)
+        {
+            try
+            {
+                $model->fullname = FiasHelper::toString($model->houseguid);
+                $model->save(false, ['fullname']);
+                echo $model->id."\n";
+            }
+            catch(\yii\base\ErrorException $e)
+            {
+            }
+        }
+    }
+
+    public function actionBuildTree($parent = false)
+    {
+        $query = FiasAddrobj::find()->andWhere([
+            'currstatus' => 0,
+        ]);
+
+        if (!$parent)
+        {
+            $query->andWhere([
+                'aolevel' => 1,
+            ]);
+        }
+        else
+        {
+            $query->andWhere([
+                'parentguid' => $parent->aoguid,
+            ]);
+        }
+        $query->orderBy('formalname');
+        
+        foreach($query->all() as $child)
+        {
+            $model = new FiasNestedsets([
+                'aoguid' => $child->aoguid,
+            ]);
+
+            if ($parent)
+            {
+                $model->appendTo($parent);
+            }
+            else
+            {
+                $model->makeRoot();
+                
+            }
+            $this->actionBuildTree($model);
+            $model->save();
+
+            // Добавляем дома
+            foreach(FiasHouse::find()->andWhere(['aoguid' => $child->aoguid])->all() as $house)
+            {
+                $houseModel = new FiasNestedsets([
+                    'aoguid' => $house->houseguid,
+                ]);
+                $houseModel->appendTo($model);
+                $houseModel->save();
+            }
+        }
     }
 }

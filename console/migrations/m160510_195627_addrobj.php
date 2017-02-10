@@ -16,6 +16,7 @@ class m160510_195627_addrobj extends Migration
         }
 
         $this->createTable($this->tableName, [
+            'id' => $this->primaryKey(),
             'aoguid' => 'VARCHAR(36)',
             'formalname' => 'VARCHAR(120)',
             'regioncode' => 'VARCHAR(2)',

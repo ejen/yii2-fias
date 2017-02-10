@@ -17,6 +17,8 @@ class FiasSelector extends \yii\widgets\InputWidget
 {
     private $_level = 3;
 
+    public $method = "POST";
+
     public function run()
     {
         $id = Html::getInputId($this->model, $this->attribute);
@@ -53,14 +55,16 @@ class FiasSelector extends \yii\widgets\InputWidget
 
         $this->view->registerJs("
 
-            $('#".$id." select').change(function(){
-                
+            $('#".$id." select').change(function(event){
+
+                event.stopPropagation();
+
                 $.pjax.defaults.data = {
                     '$name': $(this).val(),
                 };
 
                 $.pjax.reload('#".$id."', {
-                    type: 'POST'
+                    type: '".$this->method."'
                 });
 
             });
@@ -126,7 +130,7 @@ class FiasSelector extends \yii\widgets\InputWidget
             'id' => md5(Html::getInputId($this->model, $this->attribute).mt_rand(0, 999999999).mt_rand(0,999999999)),
             'name' => '',
             'value' => $value,
-            'data' => array_merge([ 0 => '...'], $data),
+            'data' => array_merge([ '' => '...'], $data),
             'language' => 'ru',
         ]);
     }
