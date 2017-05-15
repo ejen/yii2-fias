@@ -53,6 +53,8 @@ class m160510_195627_addrobj extends Migration
             'startdate' => 'date',
             'enddate' => 'date',
             'normdoc' => 'VARCHAR(36)',
+            'cadnum' => 'VARCHAR(100)',
+            'divtype' => 'INT',
         ], $tableOptions);
     }
 
