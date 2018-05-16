@@ -45,7 +45,8 @@ php yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
 
 ## Импорт dbf файла в базу данных
 ```
-php yii fias/import-dbf data/ADDROB66.DBF --region=66
+php yii fias/import-dbf data\ADDROB66.DBF --region=66
+php yii fias/import-dbf data\HOUSE66.DBF
 ```
 
 Опция region является не обязательной и позволяет импортировать записи относящиеся только к конкретному региону(в случае импорта ADDROBJ.DBF)
