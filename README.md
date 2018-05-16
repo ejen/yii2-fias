@@ -10,13 +10,13 @@
 Выполните
 
 ```
-php composer.phar require --prefer-dist yii2/yii2-fias
+composer require --prefer-dist wertex/yii2-fias
 ```
 
 или добавьте
 
 ```
-"ejen/yii2-fias": "@dev"
+"wertex/yii2-fias": "@dev"
 ```
 
 в соответствующую секцию файла `composer.json`.
@@ -24,7 +24,7 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 # Создание таблиц в базе данных
 
 ```
-./yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
+php yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
 ```
 
 # Настройка консольного приложения
@@ -45,7 +45,7 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 
 ## Импорт dbf файла в базу данных
 ```
-./yii fias/import-dbf /path/to/FILENAME.DBF --region=66
+php yii fias/import-dbf data/ADDROB66.DBF --region=66
 ```
 
 Опция region является не обязательной и позволяет импортировать записи относящиеся только к конкретному региону(в случае импорта ADDROBJ.DBF)
