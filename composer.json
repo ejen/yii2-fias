@@ -1,12 +1,12 @@
 {
-    "name": "ejen/yii2-fias",
+    "name": "wertex/yii2-fias",
     "description": "Yii2 extension for FIAS database",
     "keywords": ["yii2", "fias"],
     "type": "yii2-extension",
     "license": "MIT",
     "support": {
-        "source": "https://github.com/ejen/yii2-fias",
-        "issues": "https://github.com/ejen/yii2-fias/issues"
+        "source": "https://github.com/wertex/yii2-fias",
+        "issues": "https://github.com/wertex/yii2-fias/issues"
     },
     "authors": [
         {

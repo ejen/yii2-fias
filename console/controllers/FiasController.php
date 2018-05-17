@@ -39,7 +39,7 @@ class FiasController extends \yii\console\Controller
 
     public function actionImportDbf($filename, $region = false)
     {
-        $db = @dbase_open($filename, 0);
+        $db = dbase_open($filename, 0);
         if (!$db)
         {
             $this->stderr("Не удалось открыть DBF файл: '$filename'\n");
@@ -47,8 +47,8 @@ class FiasController extends \yii\console\Controller
         }
 
         $classMap = [
-            '/^.*DADDROBJ\.DBF$/'   => FiasDaddrobj::className(),
-            '/^.*ADDROBJ\.DBF$/'    => FiasAddrobj::className(),
+            '/^.*DADDROB\.DBF$/'   => FiasDaddrobj::className(),
+            '/^.*ADDROB\d\d\.DBF$/'    => FiasAddrobj::className(),
             '/^.*LANDMARK\.DBF$/'   => FiasLandmark::className(),
             '/^.*DHOUSE\.DBF$/'     => FiasDhouse::className(),
             '/^.*HOUSE\d\d\.DBF$/'  => FiasHouse::className(),

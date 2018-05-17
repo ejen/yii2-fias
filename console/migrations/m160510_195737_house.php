@@ -37,6 +37,8 @@ class m160510_195737_house extends Migration
             'statstatus' => 'INT',
             'normdoc' => 'VARCHAR(36)',
             'counter' => 'INT',
+            'cadnum' => 'VARCHAR(100)',
+            'divtype' => 'INT',
         ], $tableOptions);
     }
 

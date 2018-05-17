@@ -1,3 +1,5 @@
+Это клон репозитория от ejen. Создал его по причине того, что изначальный код давно не обновлялся. 
+
 # yii2-fias
 Инструменты для работы с ФИАС в Yii2
 
@@ -8,13 +10,13 @@
 Выполните
 
 ```
-php composer.phar require --prefer-dist yii2/yii2-fias
+composer require --prefer-dist wertex/yii2-fias
 ```
 
 или добавьте
 
 ```
-"ejen/yii2-fias": "@dev"
+"wertex/yii2-fias": "@dev"
 ```
 
 в соответствующую секцию файла `composer.json`.
@@ -22,7 +24,7 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 # Создание таблиц в базе данных
 
 ```
-./yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
+php yii migrate --migrationPath=@vendor/ejen/yii2-fias/console/migrations
 ```
 
 # Настройка консольного приложения
@@ -32,7 +34,9 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 ```php
     ...
     'controllerMap' => [
-        'fias' => 'ejen\fias\console\controllers\FiasController',
+        'fias' => [
+            'class' => 'ejen\fias\console\controllers\FiasController',
+        ]
     ],
     ...
 ```
@@ -41,7 +45,8 @@ php composer.phar require --prefer-dist yii2/yii2-fias
 
 ## Импорт dbf файла в базу данных
 ```
-./yii fias/import-dbf /path/to/FILENAME.DBF --region=60
+php yii fias/import-dbf data\ADDROB66.DBF --region=66
+php yii fias/import-dbf data\HOUSE66.DBF
 ```
 
 Опция region является не обязательной и позволяет импортировать записи относящиеся только к конкретному региону(в случае импорта ADDROBJ.DBF)

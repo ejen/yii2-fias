@@ -25,6 +25,7 @@ class m160510_195627_addrobj extends Migration
             'citycode' => 'VARCHAR(3)',
             'ctarcode' => 'VARCHAR(3)',
             'placecode' => 'VARCHAR(3)',
+            'plancode' => 'VARCHAR(4)',
             'streetcode' => 'VARCHAR(4)',
             'extrcode' => 'VARCHAR(4)',
             'sextcode' => 'VARCHAR(3)',
@@ -53,6 +54,8 @@ class m160510_195627_addrobj extends Migration
             'startdate' => 'date',
             'enddate' => 'date',
             'normdoc' => 'VARCHAR(36)',
+            'cadnum' => 'VARCHAR(100)',
+            'divtype' => 'INT',
         ], $tableOptions);
     }
 
